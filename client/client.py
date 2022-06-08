@@ -11,6 +11,9 @@ print(x.decode())
 time.sleep(1)
 while True:
     os.system('cls')
+    if input("Do you want to log in? (y/n): ") != "y":
+        print("Bye!")
+        break
     username=input("Username: ")
     password=input("Password: ")
     data={"username":username,"password":password}
