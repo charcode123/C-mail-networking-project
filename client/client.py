@@ -67,3 +67,4 @@ while True:
             x=client.recv(1024)
             print(x.decode())
             break            
+client.close()

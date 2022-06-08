@@ -51,11 +51,12 @@ class ClientThread(threading.Thread):
                     x=mh.view_sent(data['username'])
                     self.csocket.send(bytes(json.dumps(x),"UTF-8"))
                 elif choice=="4":
+                    print ("Client at ", clientAddress , " disconnected...")
                     self.csocket.send(bytes("Logged out","UTF-8"))
                     break        
 
 
-        print ("Client at ", clientAddress , " disconnected...")
+        
 LOCALHOST = "127.0.0.1"
 PORT = 12345
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
