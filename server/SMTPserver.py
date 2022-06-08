@@ -3,6 +3,8 @@ import os
 import json
 import time
 import user_authentication as ua
+import user_validity as uv
+import mail_handler as mh
 def receive_json(conn):
     data = conn.recv(1024)
     data = data.decode('utf-8')
@@ -28,10 +30,18 @@ class ClientThread(threading.Thread):
             else:
                 self.csocket.send(bytes("False","UTF-8"))
                 continue
-            choice=receive_data(self.csocket)
-            if choice=="1":
-                to=receive_data(self.csocket)    
-                
+            while True:
+                choice=receive_data(self.csocket)
+                if choice=="1":
+                    to=receive_data(self.csocket)
+                    x=uv.user_validity(to)
+                    if x==True:
+                        self.csocket.send(bytes("True","UTF-8"))
+                    else:
+                        self.csocket.send(bytes("False","UTF-8"))
+                        continue      
+                    data=receive_json(self.csocket)
+                    mh.mail(data)
 
         print ("Client at ", clientAddress , " disconnected...")
 LOCALHOST = "127.0.0.1"
