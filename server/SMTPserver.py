@@ -41,7 +41,19 @@ class ClientThread(threading.Thread):
                         self.csocket.send(bytes("False","UTF-8"))
                         continue      
                     data=receive_json(self.csocket)
-                    mh.mail(data)
+                    x=mh.send_mail(data)
+                    if x==True:
+                        self.csocket.send(bytes("Mail sent successfully","UTF-8"))
+                elif choice=="2":
+                    x=mh.view_inbox(data['username'])
+                    self.csocket.send(bytes(json.dumps(x),"UTF-8"))
+                elif choice=="3":
+                    x=mh.view_sent(data['username'])
+                    self.csocket.send(bytes(json.dumps(x),"UTF-8"))
+                elif choice=="4":
+                    self.csocket.send(bytes("Logged out","UTF-8"))
+                    break        
+
 
         print ("Client at ", clientAddress , " disconnected...")
 LOCALHOST = "127.0.0.1"

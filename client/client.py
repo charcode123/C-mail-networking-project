@@ -2,6 +2,11 @@ import socket
 import json
 import time
 import os
+def receive_json(conn):
+    data = conn.recv(1024)
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    return data
 SERVER = "127.0.0.1"
 PORT = 12345
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -51,16 +56,12 @@ while True:
             print(x.decode())
         elif choice=="2":
             client.send(bytes("2","UTF-8"))
-            x=client.recv(1024)
-            print(x.decode())
-            x=client.recv(1024)
-            print(x.decode())
+            x=receive_json(client)
+            print(x)
         elif choice=="3":
             client.send(bytes("3","UTF-8"))
-            x=client.recv(1024)
-            print(x.decode())
-            x=client.recv(1024)
-            print(x.decode())
+            x=receive_json(client)
+            print(x)
         elif choice=="4":
             client.send(bytes("4","UTF-8"))
             x=client.recv(1024)
