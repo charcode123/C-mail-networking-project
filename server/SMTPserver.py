@@ -21,7 +21,6 @@ class ClientThread(threading.Thread):
         print ("New connection added: ", clientAddress)
         self.csocket.send(bytes("Connection estblished",'UTF-8'))
     def run(self):
-        msg = ''
         while True:
             data=receive_json(self.csocket)
             x=ua.user_auth(data['username'],data['password'])
