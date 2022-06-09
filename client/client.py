@@ -3,16 +3,20 @@ import json
 import time
 import os
 def receive_json(conn):
-    data = conn.recv(1024)
+    data = conn.recv(4096)
     data = data.decode('utf-8')
     data = json.loads(data)
     return data
+def receive_data(conn):
+    data = conn.recv(4096)
+    data = data.decode('utf-8')
+    return data     
 SERVER = "127.0.0.1"
 PORT = 12345
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect((SERVER, PORT))
-x=client.recv(1024)
-print(x.decode())
+x=receive_data(client)
+print(x)
 time.sleep(1)
 while True:
     os.system('cls')
@@ -23,8 +27,8 @@ while True:
     password=input("Password: ")
     data={"username":username,"password":password}
     client.send(bytes(json.dumps(data),"UTF-8"))
-    x=client.recv(1024)
-    if x.decode()=="True":
+    x=receive_data(client)
+    if x=="True":
         print("Login Successful")
         time.sleep(1)
         os.system('cls')
@@ -41,8 +45,8 @@ while True:
         choice=input("Enter your choice: ")
         if choice=="1":
             client.send(bytes("1","UTF-8"))
-            x=client.recv(1024)
-            print(x.decode())
+            x=receive_data(client)
+            print(x)
             to=input("To: ")
             y=client.send(bytes(to,"UTF-8"))
             if y==False:
@@ -52,8 +56,8 @@ while True:
             message=input("Message: ")
             data={"from":username,"to":to,"subject":subject,"message":message,"time":time.time()}
             client.send(bytes(json.dumps(data),"UTF-8"))
-            x=client.recv(1024)
-            print(x.decode())
+            x=receive_data(client)
+            print(x)
         elif choice=="2":
             client.send(bytes("2","UTF-8"))
             x=receive_json(client)
@@ -64,7 +68,7 @@ while True:
             print(x)
         elif choice=="4":
             client.send(bytes("4","UTF-8"))
-            x=client.recv(1024)
-            print(x.decode())
+            x=receive_data(client)
+            print(x)
             break            
 client.close()

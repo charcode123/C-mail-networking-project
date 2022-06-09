@@ -3,13 +3,14 @@ import json
 import user_authentication as ua
 import user_validity as uv
 import mail_handler as mh
+import pickle
 def receive_json(conn):
-    data = conn.recv(1024)
+    data = conn.recv(4096)
     data = data.decode('utf-8')
     data = json.loads(data)
     return data
 def receive_data(conn):
-    data = conn.recv(1024)
+    data = conn.recv(4096)
     data = data.decode('utf-8')
     return data    
 class ClientThread(threading.Thread):
@@ -41,8 +42,7 @@ class ClientThread(threading.Thread):
                         continue      
                     data=receive_json(self.csocket)
                     x=mh.send_mail(data)
-                    if x==True:
-                        self.csocket.send(bytes("Mail sent successfully","UTF-8"))
+                    self.csocket.send(bytes("Mail sent successfully","UTF-8"))
                 elif choice=="2":
                     x=mh.view_inbox(data['username'])
                     self.csocket.send(bytes(json.dumps(x),"UTF-8"))

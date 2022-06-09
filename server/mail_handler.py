@@ -4,7 +4,7 @@ db=client.Email_DB
 def send_mail(data):
     collections=db.Mails
     collections.insert_one(data)
-    return True
+    return 
 def view_inbox(username):
     inbox=[]
     collections=db.Mails
