@@ -32,7 +32,9 @@ class ClientThread(threading.Thread):
             while True:
                 choice=receive_data(self.csocket)
                 if choice=="1":
+                    self.csocket.send(bytes("COMPOSE","UTF-8"))
                     to=receive_data(self.csocket)
+                    print(to)
                     x=uv.user_validity(to)
                     if x==True:
                         self.csocket.send(bytes("True","UTF-8"))
