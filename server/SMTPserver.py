@@ -45,10 +45,10 @@ class ClientThread(threading.Thread):
                     self.csocket.send(bytes("Mail sent successfully","UTF-8"))
                 elif choice=="2":
                     x=mh.view_inbox(data['username'])
-                    self.csocket.send(bytes(json.dumps(x),"UTF-8"))
+                    self.csocket.send(bytes(pickle.dumps(x),"UTF-8"))
                 elif choice=="3":
                     x=mh.view_sent(data['username'])
-                    self.csocket.send(bytes(json.dumps(x),"UTF-8"))
+                    self.csocket.send(bytes(pickle.dumps(x),"UTF-8"))
                 elif choice=="4":
                     print ("Client at ", clientAddress , " disconnected...")
                     self.csocket.send(bytes("Logged out","UTF-8"))

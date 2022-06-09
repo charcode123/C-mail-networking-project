@@ -60,11 +60,11 @@ while True:
             print(x)
         elif choice=="2":
             client.send(bytes("2","UTF-8"))
-            x=receive_json(client)
+            x=receive_data(client)
             print(x)
         elif choice=="3":
             client.send(bytes("3","UTF-8"))
-            x=receive_json(client)
+            x=receive_data(client)
             print(x)
         elif choice=="4":
             client.send(bytes("4","UTF-8"))
