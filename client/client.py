@@ -45,7 +45,7 @@ while True:
             print(x.decode())
             to=input("To: ")
             y=client.send(bytes(to,"UTF-8"))
-            if y==false:
+            if y==False:
                 print("Invalid Username")
                 continue
             subject=input("Subject: ")

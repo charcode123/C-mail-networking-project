@@ -1,7 +1,5 @@
 import socket, threading
-import os
 import json
-import time
 import user_authentication as ua
 import user_validity as uv
 import mail_handler as mh
