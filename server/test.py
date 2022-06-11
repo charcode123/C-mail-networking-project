@@ -1,3 +1,11 @@
-s=[]
-s=[1,2,3,4,5,6,7,8,9,10]
-print(s)
+from numpy import dtype
+import pymongo
+client=pymongo.MongoClient("mongodb://localhost:27017/")
+db=client.Email_DB
+collections=db.Mails
+x=collections.find({"from":"charan@cmail.com"})
+y=[]
+for i in x:
+    y.append(i)
+
+print(y)

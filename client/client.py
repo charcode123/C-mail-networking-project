@@ -65,6 +65,6 @@ while True:
             break 
         elif choice=="2" or choice=="3":
             client.send(bytes(choice,"UTF-8"))
-            x=receive_json(client)
-            print(x['mails'])       
+            # x=receive_json(client)
+            # print(x['mails'])       
 client.close()

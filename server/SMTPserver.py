@@ -22,7 +22,9 @@ class ClientThread(threading.Thread):
     def run(self):
         while True:
             data=receive_json(self.csocket)
-            x=ua.user_auth(data['username'],data['password'])
+            username=data['username']
+            password=data['password']
+            x=ua.user_auth(username,password)
             if x==True:
                 self.csocket.send(bytes("True","UTF-8"))
             else:
@@ -44,11 +46,15 @@ class ClientThread(threading.Thread):
                     x=mh.send_mail(data)
                     self.csocket.send(bytes("Mail sent successfully","UTF-8"))
                 elif choice=="2":
-                    x=mh.view_inbox(data['username'])
-                    self.csocket.send(bytes(x,"UTF-8"))
+                    x=mh.view_inbox(username)
+                    # x=json.loads(x)
+                    print(x)
+                    # self.csocket.send(bytes(x,"UTF-8"))
                 elif choice=="3":
-                    x=mh.view_sent(data['username'])
-                    self.csocket.send(bytes(x,"UTF-8"))
+                    x=mh.view_sent(username)
+                    # x=json.loads(x)
+                    print(x)
+                    # self.csocket.send(bytes(x,"UTF-8"))
                 elif choice=="4":
                     print ("Client at ", clientAddress , " disconnected...")
                     self.csocket.send(bytes("Logged out","UTF-8"))

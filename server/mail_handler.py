@@ -9,14 +9,24 @@ def send_mail(data):
 def view_inbox(username):
     inbox=[]
     collections=db.Mails
-    inbox=collections.find({"to":username})
-    dict_inbox={'mails':inbox}
-    dict_inbox_json=json.dumps(dict_inbox)
+    cur=collections.find({"to":username})
+    for i in cur:
+        inbox.append(i)
+    dict_inbox_json=json.dumps(inbox)
     return dict_inbox_json
+    
 def view_sent(username):
     sent=[]
     collections=db.Mails
-    sent=collections.find({"from":username})
-    dict_sent={'mails':sent}
-    dict_sent_json=json.dumps(dict_sent)
-    return dict_sent_json        
+    cur=collections.find({"from":username})
+    for i in cur:
+        del i["_id"]
+        sent.append(i)
+
+    sent = { "data" : sent }
+    # print(sent)    
+    dict_sent_json=json.dumps(sent)
+    # # print("______")
+    # print(dict_sent_json)
+    return dict_sent_json 
+          
