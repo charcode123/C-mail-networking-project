@@ -3,7 +3,6 @@ import json
 import user_authentication as ua
 import user_validity as uv
 import mail_handler as mh
-import pickle
 def receive_json(conn):
     data = conn.recv(4096)
     data = data.decode('utf-8')
