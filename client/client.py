@@ -65,6 +65,13 @@ while True:
             break 
         elif choice=="2" or choice=="3":
             client.send(bytes(choice,"UTF-8"))
-            # x=receive_json(client)
-            # print(x['mails'])       
+            x=receive_json(client)
+            for i in x:
+                print("from:",i['from'])
+                print("to:",i['to'])
+                print("subject:",i['subject'])
+                print("message:",i['message'])
+                print("time:",time.strftime('%A, %Y-%m-%d %H:%M:%S', time.localtime(i['time'])))
+
+
 client.close()

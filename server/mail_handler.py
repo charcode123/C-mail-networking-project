@@ -11,6 +11,7 @@ def view_inbox(username):
     collections=db.Mails
     cur=collections.find({"to":username})
     for i in cur:
+        del i["_id"]
         inbox.append(i)
     dict_inbox_json=json.dumps(inbox)
     return dict_inbox_json
@@ -22,11 +23,6 @@ def view_sent(username):
     for i in cur:
         del i["_id"]
         sent.append(i)
-
-    sent = { "data" : sent }
-    # print(sent)    
     dict_sent_json=json.dumps(sent)
-    # # print("______")
-    # print(dict_sent_json)
     return dict_sent_json 
           
