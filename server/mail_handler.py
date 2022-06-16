@@ -13,6 +13,8 @@ def view_inbox(username):
     for i in cur:
         del i["_id"]
         inbox.append(i)
+    print(inbox)   
+    inbox={'mails':inbox}   
     dict_inbox_json=json.dumps(inbox)
     return dict_inbox_json
     
@@ -23,6 +25,8 @@ def view_sent(username):
     for i in cur:
         del i["_id"]
         sent.append(i)
+    print(sent)    
+    sent={'mails':sent}    
     dict_sent_json=json.dumps(sent)
     return dict_sent_json 
           

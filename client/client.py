@@ -3,7 +3,7 @@ import json
 import time
 import os
 def receive_json(conn):
-    data = conn.recv(4096)
+    data = conn.recv(8192)
     data = data.decode('utf-8')
     data = json.loads(data)
     return data
@@ -68,6 +68,7 @@ while True:
             elif choice=="2" or choice=="3":
                 client.send(bytes(choice,"UTF-8"))
                 x=receive_json(client)
+                x=x['mails']
                 for i in x:
                     print("----------------------------------------------------")
                     print("from:",i['from'])
