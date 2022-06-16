@@ -20,60 +20,82 @@ print(x)
 time.sleep(1)
 while True:
     os.system('cls')
-    if input("Do you want to log in? (y/n): ") != "y":
-        print("Bye!")
+    print("1. Login")
+    print("2. Register")
+    print("3. Exit")
+    choice=input("Enter your choice: ")
+    if choice=="1":
+        username=input("Username: ")
+        password=input("Password: ")
+        data={"username":username,"password":password,"choice":choice}
+        client.send(bytes(json.dumps(data),"UTF-8"))
+        x=receive_data(client)
+        if x=="True":
+            print("Login Successful")
+            time.sleep(1)
+            os.system('cls')
+        else:
+            print("Login Failed - Try Again")
+            time.sleep(1)
+            os.system('cls')
+            continue
+        while True:
+            print("1. Send Email")
+            print("2. View Inbox")
+            print("3. View Sent")
+            print("4. Logout")
+            choice=input("Enter your choice: ")
+            if choice=="1":
+                client.send(bytes("1","UTF-8"))
+                x=receive_data(client)
+                print(x)
+                to=input("To: ")
+                y=client.send(bytes(to,"UTF-8"))
+                if y==False:
+                    print("Invalid Username")
+                    continue
+                subject=input("Subject: ")
+                message=input("Message: ")
+                data={"from":username,"to":to,"subject":subject,"message":message,"time":time.time()}
+                client.send(bytes(json.dumps(data),"UTF-8"))
+                x=receive_data(client)
+                print(x)
+            elif choice=="4":
+                client.send(bytes("4","UTF-8"))
+                x=receive_data(client)
+                print(x)
+                break 
+            elif choice=="2" or choice=="3":
+                client.send(bytes(choice,"UTF-8"))
+                x=receive_json(client)
+                for i in x:
+                    print("----------------------------------------------------")
+                    print("from:",i['from'])
+                    print("to:",i['to'])
+                    print("subject:",i['subject'])
+                    print("message:",i['message'])
+                    print("time:",time.strftime('%A, %Y-%m-%d %H:%M:%S', time.localtime(i['time'])))
+                    print("-----------------------------------------------------")
+    if choice=="2":
+        username=input("Username: ")
+        password=input("Password: ")
+        data={"username":username,"password":password ,"choice":choice}
+        client.send(bytes(json.dumps(data),"UTF-8"))
+        x=receive_data(client)
+        if x=="True":
+            print("Registration Successful")
+            time.sleep(1)
+            os.system('cls')
+        else:
+            print("Registration Failed - Try Again")
+            time.sleep(1)
+            os.system('cls')
+            continue
+    if choice=='3':
+        data={"username":"","password":"","choice":"3"}
+        client.send(bytes(json.dumps(data),"UTF-8"))
+        time.sleep(1)      
+        client.close()
+        print("Client Closed")
+        print("Exiting...")
         break
-    username=input("Username: ")
-    password=input("Password: ")
-    data={"username":username,"password":password}
-    client.send(bytes(json.dumps(data),"UTF-8"))
-    x=receive_data(client)
-    if x=="True":
-        print("Login Successful")
-        time.sleep(1)
-        os.system('cls')
-    else:
-        print("Login Failed - Try Again")
-        time.sleep(1)
-        os.system('cls')
-        continue
-    while True:
-        print("1. Send Email")
-        print("2. View Inbox")
-        print("3. View Sent")
-        print("4. Logout")
-        choice=input("Enter your choice: ")
-        if choice=="1":
-            client.send(bytes("1","UTF-8"))
-            x=receive_data(client)
-            print(x)
-            to=input("To: ")
-            y=client.send(bytes(to,"UTF-8"))
-            if y==False:
-                print("Invalid Username")
-                continue
-            subject=input("Subject: ")
-            message=input("Message: ")
-            data={"from":username,"to":to,"subject":subject,"message":message,"time":time.time()}
-            client.send(bytes(json.dumps(data),"UTF-8"))
-            x=receive_data(client)
-            print(x)
-        elif choice=="4":
-            client.send(bytes("4","UTF-8"))
-            x=receive_data(client)
-            print(x)
-            break 
-        elif choice=="2" or choice=="3":
-            client.send(bytes(choice,"UTF-8"))
-            x=receive_json(client)
-            for i in x:
-                print("----------------------------------------------------")
-                print("from:",i['from'])
-                print("to:",i['to'])
-                print("subject:",i['subject'])
-                print("message:",i['message'])
-                print("time:",time.strftime('%A, %Y-%m-%d %H:%M:%S', time.localtime(i['time'])))
-                print("-----------------------------------------------------")
-            
-
-client.close()
