@@ -50,9 +50,9 @@ while True:
                 x=receive_data(client)
                 print(x)
                 to=input("To: ")
-                y=client.send(bytes(to,"UTF-8"))
-                # y=receive_data(client)
-                if y==False:
+                client.send(bytes(to,"UTF-8"))
+                y=receive_data(client)
+                if y=='False':
                     print("Invalid Username")
                     continue
                 subject=input("Subject: ")
@@ -61,6 +61,7 @@ while True:
                 client.send(bytes(json.dumps(data),"UTF-8"))
                 x=receive_data(client)
                 print(x)
+                print("----------------------------------------------------")
             elif choice=="4":
                 client.send(bytes("4","UTF-8"))
                 x=receive_data(client)
