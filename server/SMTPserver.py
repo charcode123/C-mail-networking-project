@@ -36,9 +36,9 @@ class ClientThread(threading.Thread):
                     if choice=="1":
                         self.csocket.send(bytes("COMPOSE","UTF-8"))
                         to=receive_data(self.csocket)
-                        print(to)
                         x=uv.user_validity(to)
                         if x==True:
+                            print("destination : ",to)
                             self.csocket.send(bytes("True","UTF-8"))
                         else:
                             self.csocket.send(bytes("False","UTF-8"))
@@ -48,11 +48,11 @@ class ClientThread(threading.Thread):
                         self.csocket.send(bytes("Mail sent successfully","UTF-8"))
                     elif choice=="2":
                         x=mh.view_inbox(username)
-                        print(x)
+                        # print(x)
                         self.csocket.send(bytes(x,"UTF-8"))
                     elif choice=="3":
                         x=mh.view_sent(username)
-                        print(x)
+                        # print(x)
                         self.csocket.send(bytes(x,"UTF-8"))
                     elif choice=="4":
                         print ("Client at ", clientAddress , " disconnected...")
